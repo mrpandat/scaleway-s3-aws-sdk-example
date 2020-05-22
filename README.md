@@ -7,7 +7,7 @@ Get your API keys [here](https://www.scaleway.com/en/docs/generate-an-api-token/
 ### Usage
 ```bash
 $ docker build -t scaleways3 .
-$ docker run scaleways3 --env AWS_ACCESS_KEY_ID=XXXXX -env AWS_SECRET_ACCESS_KEY=XXXX
+$ docker run --env AWS_ACCESS_KEY_ID=XXXXX --env AWS_SECRET_ACCESS_KEY=XXXX scaleways3
 ```
 
 ### Test without docker
@@ -22,4 +22,33 @@ $ php src/index.php
 ## Ressources
 
 More examples with aws-sdk-php [here](https://github.com/awsdocs/aws-doc-sdk-examples/)
+
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://www.kagxaef.ovh">
+        <img src="https://avatars2.githubusercontent.com/u/22916835?v=4" width="100px;" alt="mrpandat"/>
+        <br />
+        <sub><b>mrpandat</b></sub>
+      </a>
+      <br />
+    </td>
+    <td align="center">
+      <a href="">
+        <img src="https://avatars2.githubusercontent.com/u/4287777?v=4" width="100px;" alt="ptondereau"/>
+        <br />
+        <sub><b>ptondereau</b></sub>
+      </a>
+      <br />
+    </td>
+  </tr>
+</table>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
  
