@@ -1,9 +1,20 @@
 # scaleway-s3-aws-sdk-example
-Example with scaleway s3 and aws-php-sdk
+Some example with scaleway s3 and aws-php-sdk
 
-# Install
-Access your API keys: https://www.scaleway.com/en/docs/generate-an-api-token/
+## Install
+Access your API keys [here](https://www.scaleway.com/en/docs/generate-an-api-token/)
 
-To test the project, check the file `.aws/credentials.example`, change the values by your own values, and rename it `credentials`
+### Test with docker
+Just type: `docker-compose up`
 
-Then, just type: `docker-compose up`
+### Test without docker
+
+Be sure to have composer and php on your local environment.
+
+Install dependencies with composer: `composer install`
+Launch the script: `php src/index.php`
+
+## Ressources
+
+More examples with aws-sdk-php [here](https://github.com/awsdocs/aws-doc-sdk-examples/)
+ 

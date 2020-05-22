@@ -23,15 +23,95 @@ use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 
 //Create a S3Client 
-$s3Client = new S3Client([
+$s3 = new S3Client([
     'profile' => 'default',
     'region' => 'fr-par',
     'version' => '2006-03-01',
     'endpoint' => 'http://s3.fr-par.scw.cloud'
 ]);
 
-//Listing all S3 Bucket
-$buckets = $s3Client->listBuckets();
-foreach ($buckets['Buckets'] as $bucket) {
-    echo $bucket['Name'] . "\n";
+
+$timeZone = "UTC";
+$bucketName = "scalewaytest" . time();
+$region = "fr-par";
+
+date_default_timezone_set($timeZone);
+
+function listBucketFiles($s3, $bucket) {
+    print("Files in Bucket ". $bucket . "\n");
+
+    try {
+        $results = $s3->getPaginator('ListObjects', [
+            'Bucket' => $bucket
+        ]);
+
+        foreach ($results as $result) {
+            foreach ($result['Contents'] as $object) {
+                echo $object['Key'] . PHP_EOL;
+            }
+        }
+    } catch (S3Exception $e) {
+        echo $e->getMessage() . PHP_EOL;
+    }
 }
+
+
+# Lists all of your available buckets in this AWS Region.
+function listMyBuckets($s3) {
+    print("\nMy buckets now are:\n");
+
+    $promise = $s3->listBucketsAsync();
+
+    $result = $promise->wait();
+
+    foreach ($result['Buckets'] as $bucket) {
+        echo $bucket['Name'] . PHP_EOL;
+    }
+}
+
+# Lists all of your available buckets files in this AWS Region.
+function listMyFiles($s3) {
+    $promise = $s3->listBucketsAsync();
+
+    $result = $promise->wait();
+
+    foreach ($result['Buckets'] as $bucket) {
+        listBucketFiles($s3, $bucket['Name']);
+    }
+}
+
+listMyFiles($s3);
+
+# Create a new bucket.
+print("\n\nCreating a new bucket named '$bucketName'...\n");
+
+try {
+    $promise = $s3->createBucketAsync([
+        'Bucket' => $bucketName,
+        'CreateBucketConfiguration' => [
+            'LocationConstraint' => $region
+        ]
+    ]);
+
+    $promise->wait();
+
+} catch (Exception $e) {
+    if ($e->getCode() == 'BucketAlreadyExists') {
+        exit("\nCannot create the bucket. " .
+            "A bucket with the name '$bucketName' already exists. Exiting.");
+    }
+}
+
+listMyBuckets($s3);
+
+
+# Delete the bucket you just created.
+print("\n\nDeleting the bucket named '$bucketName'...\n");
+
+$promise = $s3->deleteBucketAsync([
+    'Bucket' => $bucketName
+]);
+
+$promise->wait();
+
+listMyBuckets($s3);
