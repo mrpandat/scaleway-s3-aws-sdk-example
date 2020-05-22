@@ -7,7 +7,7 @@ Get your API keys [here](https://www.scaleway.com/en/docs/generate-an-api-token/
 ### Usage
 ```bash
 $ docker build -t scaleways3 .
-$ docker run scaleways3 -e AWS_ACCESS_KEY_ID=XXXXX -e AWS_SECRET_ACCESS_KEY=XXXX
+$ docker run scaleways3 --env AWS_ACCESS_KEY_ID=XXXXX -env AWS_SECRET_ACCESS_KEY=XXXX
 ```
 
 ### Test without docker
