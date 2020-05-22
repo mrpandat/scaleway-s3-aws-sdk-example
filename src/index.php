@@ -19,17 +19,19 @@
 
 require 'vendor/autoload.php';
 
+use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
-use Aws\Exception\AwsException;
 
 //Create a S3Client 
 $s3 = new S3Client([
-    'profile' => 'default',
     'region' => 'fr-par',
     'version' => '2006-03-01',
-    'endpoint' => 'http://s3.fr-par.scw.cloud'
+    'endpoint' => 'http://s3.fr-par.scw.cloud',
+    'credentials' => [
+        'key' => getenv('AWS_ACCESS_KEY_ID'),
+        'secret' => getenv('AWS_SECRET_ACCESS_KEY')
+    ]
 ]);
-
 
 $timeZone = "UTC";
 $bucketName = "scalewaytest" . time();
@@ -96,7 +98,7 @@ try {
     $promise->wait();
 
 } catch (Exception $e) {
-    if ($e->getCode() == 'BucketAlreadyExists') {
+    if ($e->getCode() === 'BucketAlreadyExists') {
         exit("\nCannot create the bucket. " .
             "A bucket with the name '$bucketName' already exists. Exiting.");
     }
