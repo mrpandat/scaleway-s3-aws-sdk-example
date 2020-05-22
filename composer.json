@@ -1,0 +1,12 @@
+{
+    "name": "jean/scaleway-s3-aws-sdk-example",
+    "authors": [
+        {
+            "name": "Juan",
+            "email": "mrpandat@hotmail.fr"
+        }
+    ],
+    "require": {
+        "aws/aws-sdk-php": "^3.138"
+    }
+}
