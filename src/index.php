@@ -50,6 +50,8 @@ function listBucketFiles($s3, $bucket) {
         foreach ($results as $result) {
             foreach ($result['Contents'] as $object) {
                 echo $object['Key'] . PHP_EOL;
+                echo $s3->getObjectUrl($bucket, $object['Key']) . PHP_EOL;
+
             }
         }
     } catch (S3Exception $e) {
